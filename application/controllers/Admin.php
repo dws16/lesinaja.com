@@ -197,8 +197,11 @@ class Admin extends CI_Controller
 
     public function order_log()
     {
+        $this->load->model('Admin_model');
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['title'] = 'Log Pemesanan';
+
+        $data['list'] = $this->Admin_model->getOrder();
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);

@@ -163,30 +163,29 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+            </div>
+            <div class="modal-body">
                 <div class="card mb-3" style="max-width: 1000px;">
                     <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <img id="gambar1" src="<?= base_url('assets/img/profile/') . $detail['image']; ?>" class="card-img">
+                        <div class="col-lg-4">
+                            <img id="gambar1" src="" class="card-img">
                         </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 id="name1" class="card-title">Nama :</h5>
-                                <p id="email1" class="card-text">Email :</p>
-                                <p id="role_id1" class="card-text">Role ID :</p>
-                                <p id="date_created1" class="card-text">Date Created :</p>
+                        <div class="col-lg-8">
+                            <h5 id="name1" class="card-title">Nama :</h5>
+                            <p id="email1" class="card-text">Email :</p>
+                            <p id="role_id1" class="card-text">Role ID :</p>
+                            <p id="date_created1" class="card-text">Date Created :</p>
 
-                                <?php if ($detail['role_id'] == 2) { ?>
-                                    <p id="jurusan" class="card-text">Jurusan :<?= ' ' . $mentor['jurusan']; ?></p>
-                                    <p id="angkatan" class="card-text">Angkatan :<?= ' ' . $mentor['angkatan']; ?></p>
-                                    <p id="pengajar" class="card-text">Pengajar :<?= ' ' . $mentor['matkul']; ?></p>
-                                    <p id="ipk" class="card-text">IPK :<?= ' ' . $mentor['grade']; ?></p>
-                                    <p id="phone" class="card-text">No. Telp :<?= ' ' . $mentor['phone']; ?></p>
-                                    <p id="alamat" class="card-text">Alamat :<?= ' ' . $mentor['address']; ?></p>
-                                    <p id="rating" class="card-text">Rating :<?= ' ' . $mentor['rating']; ?></p>
-                                    <p id="teach_sum" class="card-text">Jumlah mengajar :<?= ' ' . $mentor['teach_sum']; ?></p>
-                                <?php } ?>
-                                <p class="card-text"><small class="text-muted">Member since <?= date('d F Y', $user['date_created']); ?></small></p>
-                            </div>
+                            <?php if ($detail['role_id'] == 2) { ?>
+                                <p id="jurusan" class="card-text">Jurusan :<?= ' ' . $mentor['jurusan']; ?></p>
+                                <p id="angkatan" class="card-text">Angkatan :<?= ' ' . $mentor['angkatan']; ?></p>
+                                <p id="pengajar" class="card-text">Pengajar :<?= ' ' . $mentor['matkul']; ?></p>
+                                <p id="ipk" class="card-text">IPK :<?= ' ' . $mentor['grade']; ?></p>
+                                <p id="phone" class="card-text">No. Telp :<?= ' ' . $mentor['phone']; ?></p>
+                                <p id="alamat" class="card-text">Alamat :<?= ' ' . $mentor['address']; ?></p>
+                                <p id="rating" class="card-text">Rating :<?= ' ' . $mentor['rating']; ?></p>
+                                <p id="teach_sum" class="card-text">Jumlah mengajar :<?= ' ' . $mentor['teach_sum']; ?></p>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

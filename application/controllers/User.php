@@ -119,4 +119,40 @@ class User extends CI_Controller
             }
         }
     }
+
+    public function getmentoredit()
+    {
+        echo json_encode($this->db->get_where('mentor', ['id' => $this->input->post('id')])->row_array());
+    }
+
+    public function editmentor()
+    {
+        $data = [
+            "id" => $this->session->userdata('id'),
+            "jurusan" => $this->input->post('jurusan', true),
+            "angkatan" => $this->input->post('angkatan', true),
+            "matkul" => $this->input->post('pengajar', true),
+            "grade" => $this->input->post('ipk', true),
+            "phone" => $this->input->post('telp', true),
+            "address" => $this->input->post('alamat', true)
+        ];
+
+        $cek = $this->db->get_where('mentor', ['id' => $this->session->userdata('id')])->row_array();
+
+        if ($cek < 1) {
+            $this->db->where('id', $this->session->userdata('id'));
+            $this->db->insert('mentor', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+            Mentor data has been updated!
+            </div>');
+            redirect(base_url('user'));
+        } else {
+            $this->db->where('id', $this->session->userdata('id'));
+            $this->db->update('mentor', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+            Mentor data has been updated!
+            </div>');
+            redirect(base_url('user'));
+        }
+    }
 }

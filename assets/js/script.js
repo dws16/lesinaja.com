@@ -1,4 +1,26 @@
 $(function () {
+	$('.tampilMentorEdit').on('click', function () {
+		const id = $(this).data('id');
+
+		$.ajax({
+			url: 'http://[::1]/lesinaja.com/user/getmentoredit',
+			data: {
+				id: id
+			},
+			method: 'post',
+			dataType: 'json',
+			success: function (data) {
+				console.log(data);
+				$('#jurusan').val(data.jurusan);
+				$('#angkatan').val(data.angkatan);
+				$('#pengajar').val(data.matkul);
+				$('#ipk').val(data.grade);
+				$('#alamat').val(data.address);
+				$('#telp').val(data.phone);
+			}
+		})
+	})
+
 	$('.tampilModalDetail').on('click', function () {
 		const id = $(this).data('id');
 
@@ -10,10 +32,16 @@ $(function () {
 			method: 'post',
 			dataType: 'json',
 			success: function (data) {
-				$('#name1').html(data.name);
-				$('#email1').html(data.email);
-				$('#role_id1').html(data.role_id);
-				$('#date_created1').html(data.date_created);
+				console.log(data);
+				var date = data.date_created;
+				var time = parseInt(date);
+				var time2 = time * 1000;
+				var tanggal = new Date(time2)
+				$('.card-img').attr('src', 'http://localhost/lesinaja.com/assets/img/profile/' + String(data.image));
+				$('#name1').html('Name :' + data.name);
+				$('#email1').html('Email :' + data.email);
+				$('#role_id1').html('Role ID :' + data.role_id);
+				$('#date_created1').html('Date Created :' + tanggal);
 			}
 		})
 	});

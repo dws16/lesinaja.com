@@ -22,8 +22,17 @@ class Member extends CI_Controller
 
     public function cari_tutor()
     {
+        $this->load->model('Member_model');
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['title'] = 'Cari Tutor';
+
+
+        if ($this->input->post('mapel')) {
+            $data['list'] = $this->Member_model->CariMentor();
+        } else {
+            $data['list'] = $this->Member_model->ShowMentor();
+        }
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
