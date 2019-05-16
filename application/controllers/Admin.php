@@ -209,4 +209,133 @@ class Admin extends CI_Controller
         $this->load->view('admin/order_log', $data);
         $this->load->view('templates/footer');
     }
+
+    public function orderDetail()
+    {
+        $this->load->model('Admin_model');
+        echo json_encode($this->Admin_model->getOrderDetail($this->input->post('id')));
+    }
+
+    public function verif()
+    {
+        $this->db->select('email,name');
+        $this->db->from('user');
+        $this->db->where('id', $this->input->post('mentor_id'));
+        $result = $this->db->get()->row_array();
+        $emailMentor = $result['email'];
+        $nameMentor = $result['name'];
+        $mentor = [
+            'name' => $nameMentor,
+            'email' => $emailMentor,
+            'date' => $this->input->post('date'),
+            'hour' => $this->input->post('hour'),
+            'minute' => $this->input->post('minute'),
+            'address' => $this->input->post('address'),
+            'member' => $this->input->post('member')
+        ];
+
+        var_dump($mentor['member']);
+        die;
+
+        $member = [
+            'name' => $this->input->post('member'),
+            'email' => $this->input->post('email'),
+            'order_id' => $this->input->post('order_id')
+        ];
+
+        $data = [
+            "is_verified" => 1
+        ];
+        $this->db->where('order_id', $this->input->post('order_id'));
+        $this->db->update('order', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+        Order has been verified!
+        </div>');
+        redirect(base_url('admin/order_log'));
+        $this->_sendEmailMember($member);
+        $this->_sendEmailMentor($mentor);
+    }
+
+    private function _sendEmailMember($order)
+    {
+        $config = [
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_user' => 'lesinaja.its@gmail.com',
+            'smtp_pass' => '12as!@AS',
+            'smtp_port' => 465,
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n"
+        ];
+
+        $this->load->library('email', $config);
+        $this->email->initialize($config);
+
+        $this->email->from('lesinaja.its@gmail.com', 'Lesinaja');
+        $this->email->to($order['email']);
+
+
+        $this->email->subject('Verifikasi Pesanan');
+        $this->email->message(
+            '<p>Halo<strong>' . ' ' . $order['name'] . '</strong>, </p><br>
+            <p>Pesanan anda dengan ORDER-ID: <strong>' . $order['order_id'] . '</strong> sudah terverifikasi.</p>
+            <p>Terima kasih telah menggunakan dan percaya pada jasa kami.</p> <br>
+            <br><br><br><br><br>
+            <p>Salam,</p>
+            <p><strong>Lesinaja</strong></p>
+            '
+        );
+
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
+        }
+    }
+
+    private function _sendEmailMentor($order)
+    {
+        $config = [
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_user' => 'lesinaja.its@gmail.com',
+            'smtp_pass' => '12as!@AS',
+            'smtp_port' => 465,
+            'mailtype' => 'html',
+            'charset' => 'utf-8',
+            'newline' => "\r\n"
+        ];
+
+        $this->load->library('email', $config);
+        $this->email->initialize($config);
+
+        $this->email->from('lesinaja.its@gmail.com', 'Lesinaja');
+        $this->email->to($order['email']);
+
+
+        $this->email->subject('Order Tutor Baru');
+        $this->email->message(
+            '<p>Halo<strong>' . ' ' . $order['name'] . '</strong>, </p><br>
+            <p>Anda mendapatkan order tutor dengan data sebagai berikut :</p>
+        
+            <p>Nama Mentee : ' . $order['member'] . '</p>
+            <p>Jadwal : ' . $order['date'] . ', Pukul ' . $order['hour'] . ':' . $order['minute'] . '</p>
+            <p>Alamat Pelaksanaan : ' . $order['address'] . '</p>
+            <p>Catatan :' . $order['note'] . '</p> <br>
+            -------------------------------------------------------------------------------------- <br>
+            <p>Selamat mengajar dan semangat dalam menjalani kegiatan pembelajaran!</p><br><br><br><br><br>
+            <p>Terima kasih,</p>
+            <p><strong>Lesinaja</strong></p>
+            '
+        );
+
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->print_debugger();
+            die;
+        }
+    }
 }

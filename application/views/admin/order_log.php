@@ -51,7 +51,7 @@
                                 <th scope="col">ORDER-ID</th>
                                 <th scope="col">Member</th>
                                 <th scope="col">Mentor</th>
-                                <th scope="col">Bill</th>
+                                <th scope="col">Payment</th>
                                 <th scope="col">Verified</th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -62,7 +62,7 @@
                                 <th scope="col">ORDER-ID</th>
                                 <th scope="col">Member</th>
                                 <th scope="col">Mentor</th>
-                                <th scope="col">Bill</th>
+                                <th scope="col">Payment</th>
                                 <th scope="col">Verified</th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -80,21 +80,13 @@
                                     <tr>
                                         <th scope="row"><?= $i; ?></th>
                                         <td><?= $l['order_id']; ?></td>
-                                        <td><?= $l['email']; ?></td>
-                                        <td><?= $l['role_id']; ?></td>
+                                        <td><?= $l['name']; ?></td>
+                                        <td><?php $nama = $this->db->get_where('user', ['id' => $l['mentor_id']])->row_array();
+                                            echo $nama['name']; ?></td>
+                                        <td><?= $l['bill'] ?></td>
+                                        <td><?= $l['is_verified'] ?></td>
                                         <td>
-                                            <a href="<?= base_url('admin/detail/') . $l['id']; ?>" data-toggle="modal" data-target="#UserDetail" data-id="<?= $l['id']; ?>" class="badge badge-pill badge-success tampilModalDetail">
-                                                <i class="fas fa-fw fa-info-circle"></i>
-                                                Detail
-                                            </a>
-                                            <a href="<?= base_url('admin/edit/') . $l['id']; ?>" class="badge badge-pill badge-primary tampilModalUbah" data-id="<?= $l['id']; ?>" data-toggle="modal" data-target="#UserEdit">
-                                                <i class=" fas fa-fw fa-edit"></i>
-                                                Edit
-                                            </a>
-                                            <a href="<?= base_url('admin/delete/') . $l['id']; ?>" onclick="return confirm('Yakin?');" class="badge badge-pill badge-danger">
-                                                <i class="fas fa-fw fa-trash-alt"></i>
-                                                Delete
-                                            </a>
+                                            <a href="<?= base_url('admin/order_log/') . $l['order_id']; ?>" class="badge badge-pill badge-primary DetailOrder" data-toggle="modal" data-target="#OrderDetail" data-id="<?= $l['order_id']; ?>">Detail</a>
                                         </td>
                                     </tr>
                                     <?php $i++;
@@ -115,3 +107,85 @@
 
 </div>
 <!-- End of Main Content -->
+
+
+<div class="modal fade" id="OrderDetail" tabindex="-1" role="dialog" aria-labelledby="OrderDetailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="OrderDetailLabel">Order Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('admin/verif') ?>" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input class="form-control" type="text" name="email" id="email" readonly>
+                                        <input class="form-control" type="text" name="order_id" id="order_id" hidden>
+                                        <input class="form-control" type="text" name="mentor_id" id="mentor_id" hidden>
+                                        <input class="form-control" type="text" name="member" id="member" hidden>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="address">Alamat</label>
+                                        <input type="text" class="form-control" id="address" name="address" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="form-group">
+                                        <label for="date">Tanggal</label>
+                                        <input type="text" class="form-control" id="date" name="date" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="hour">Jam</label>
+                                        <input type="text" class="form-control" id="hour" name="hour" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="minute">:</label>
+                                        <input type="text" class="form-control" id="minute" name="minute" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="timestamp">Waktu Daftar</label>
+                                        <input type="text" class="form-control" id="timestamp" name="timestamp" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="note">Catatan</label>
+                                        <input type="text" class="form-control" id="note" name="note" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <img id="gambar1" src="" class="card-img">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Verify</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

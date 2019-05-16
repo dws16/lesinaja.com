@@ -42,21 +42,13 @@
                                     <img src="<?= base_url('assets/img/profile/') . $l['image']; ?>" class="card-img">
                                 </div>
                                 <div class="col-lg-4">
-                                    <p class="card-text">Jurusan :<?= ' ' . $l['jurusan']; ?></p>
-                                    <p class="card-text">Angkatan :<?= ' ' . $l['angkatan']; ?></p>
-                                    <p class="card-text">Pengajar :<?= ' ' . $l['matkul']; ?></p>
-                                    <p class="card-text">IPK :<?= ' ' . $l['grade']; ?></p>
-                                    <p class="card-text">No. Telp :<?= ' ' . $l['phone']; ?></p>
-                                    <p class="card-text">Rating :<?= ' ' . $l['rating']; ?></p>
-                                </div>
-                                <div class="col-lg-5">
-                                    <h5 class="text-center"><strong>Pesan Mentor</strong></h5>
-                                    <p class="align-text-justify">Cocok dengan mentor ini? Tekan tombol di bawah untuk memesan les dengan mentor ini.</p>
-                                    <div class="row text-center">
-                                        <div class="col">
-                                            <a href="" class="btn btn-warning">Pesan</a>
-                                        </div>
-                                    </div>
+                                    <p class="card-text mb-0">Jurusan :<?= ' ' . $l['jurusan']; ?></p>
+                                    <p class="card-text mb-0">Angkatan :<?= ' ' . $l['angkatan']; ?></p>
+                                    <p class="card-text mb-0">Pengajar :<?= ' ' . $l['matkul']; ?></p>
+                                    <p class="card-text mb-0">IPK :<?= ' ' . $l['grade']; ?></p>
+                                    <p class="card-text mb-0">No. Telp :<?= ' ' . $l['phone']; ?></p>
+                                    <p class="card-text mb-0">Rating :<?= ' ' . $l['rating']; ?></p>
+                                    <a href="<?= base_url('member/mentordetail/') . $l['id']; ?>" class="btn btn-warning mt-3 ml-4">Detail</a>
                                 </div>
                             </div>
                         </div>
