@@ -234,9 +234,6 @@ class Admin extends CI_Controller
             'member' => $this->input->post('member')
         ];
 
-        var_dump($mentor['member']);
-        die;
-
         $member = [
             'name' => $this->input->post('member'),
             'email' => $this->input->post('email'),
